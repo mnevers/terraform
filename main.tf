@@ -2,6 +2,8 @@ provider "aws"{
     region = "us-east-1"
 }
 
+#Main not so used. check out Network.tf and others
+
 resource "aws_security_group" "allow-ssh-web"{
     name = "allow-ssh-web-traffic"
     description = "Allow inbound traffic"
