@@ -1,0 +1,81 @@
+#commands
+#terraform apply ( --auto-approve optional)
+#terraform plan
+
+# resource "aws_network_interface" "webserver-nic"{
+#     subnet_id = aws_subnet.subnet-prd-a.id
+#     private_ips = ["10.0.1.20"]
+#     security_groups = [aws_security_group.allow-ssh-web.id]
+# }
+
+# resource "aws_eip" "webserver-ip"{
+#     network_interface = aws_network_interface.webserver-nic.id
+#     associate_with_private_ip = "10.0.1.20"
+#     depends_on = [aws_internet_gateway.gw-prd]
+# }
+
+#Ubuntu 22.04 LTS
+# resource "aws_instance" "WebServer" {
+#     ami = "ami-053b0d53c279acc90"
+#     instance_type = "t2.micro"
+#     availability_zone = "us-east-1a"
+#     key_name = "main_key"
+
+#     network_interface {
+#       device_index = 0
+#       network_interface_id = aws_network_interface.webserver-nic.id
+#     }
+
+#     user_data = <<-EOF
+#                 #!/bin/bash
+#                 sudo apt update -y
+#                 sudo apt install apache2 -y
+#                 sudo systemctl start apache2
+#                 sudo bash -c 'echo First web server > /var/www/html/index.html'
+#                 EOF
+
+#     tags = {
+#         Name = "WebServer"
+#     }
+
+#      lifecycle {
+#        prevent_destory = true
+#      }
+# }
+
+# variable "ec2_configs" {
+#   description = "Configuration for each EC2 instance"
+#   default = {
+#     "dev-instance" = {
+#       instance_type = "t2.micro"
+#       tags          = {
+#         Name    = "Development"
+#         Purpose = "Testing"
+#       }
+#     },
+#     "prd-instance" = {
+#       instance_type = "t2.medium"
+#       tags          = {
+#         Name    = "Production"
+#         Purpose = "Deployment"
+#       }
+#     }
+#   }
+# }
+
+# resource "aws_instance" "ec2" {
+#   for_each = var.ec2_configs
+  
+#   ami           = "ami-0c55b159cbfafe1f0" # replace with your desired AMI
+#   instance_type = each.value.instance_type
+  
+#   tags = each.value.tags
+# }
+
+# output "dev_instance_id" {
+#   value = aws_instance.ec2["dev-instance"].id
+# }
+
+# output "prd_instance_public_ip" {
+#   value = aws_instance.ec2["prd-instance"].public_ip
+# }
