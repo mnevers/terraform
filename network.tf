@@ -12,8 +12,13 @@ data "aws_vpc" "default-vpc"{
     }
 }
 
+variable "boolean"{
+    description = "testing bools"
+    type = bool
+}
+
 output "default-vpc"{
-    value = data.aws_vpc.default-vpc.cidr_block
+    value = var.boolean == true ? data.aws_vpc.default-vpc.cidr_block : "Sensored Message"
 }
 
 variable "subnet_prd_a_prefix" {
