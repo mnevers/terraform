@@ -2,6 +2,12 @@ provider "aws"{
     region = "us-east-1"
 }
 
+provider "aws"{
+    alias = "west"
+    region = "us-west-2"
+}
+
+
 #Main not so used. check out Network.tf and others
 
 resource "aws_security_group" "allow-ssh-web"{
@@ -41,4 +47,3 @@ resource "aws_security_group" "allow-ssh-web"{
     }
 
 }
-
