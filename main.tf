@@ -29,12 +29,15 @@ locals {
     my_ip = ["73.69.109.181/32"]
 }
 
-#Main not so used. check out Network.tf and others
-
 resource "aws_security_group" "allow-ssh-web"{
+    for_each = {
+        vpc_prv = aws_vpc.vpc-prd.id
+        vpc_pub = data.aws_vpc.default-vpc.id
+    }
+
     name = "allow-ssh-web-traffic"
     description = "Allow inbound traffic"
-    vpc_id = aws_vpc.vpc-prd.id
+    vpc_id = each.value
 
     dynamic "ingress" {
         for_each = local.ingress_rules
@@ -55,4 +58,7 @@ resource "aws_security_group" "allow-ssh-web"{
         cidr_blocks = ["0.0.0.0/0"]
     }
 
+    tags = {
+        Name = "allow-ssh-web-traffic"
+    }
 }
