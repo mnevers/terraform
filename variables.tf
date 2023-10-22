@@ -8,8 +8,23 @@ variable "boolean"{
     type = bool
 }
 
+variable "subnet_id"{
+    description = "Default VPC subnet ID"
+    type = string
+}
+
+variable "key_name"{
+    description = "Key Name"
+    type = string
+}
+
 variable "subnet_prd_a_prefix" {
     description = "Lorem ipsum dolor sit amet"
+    type = string
+}
+
+variable "vpc_id" {
+    description = "Default VPC ID"
     type = string
 }
 
@@ -35,3 +50,4 @@ locals {
         to_port = 22
     }]
 }
+

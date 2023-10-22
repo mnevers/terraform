@@ -7,14 +7,15 @@ provider "aws"{
     region = "us-west-2"
 }
 
-module "webserver" {
-    source = "../modules/webserver"
-    vpc_id = "vpc-1c1c1966"
-    cidr_block = "10.0.10.0/16"
-    webserver_name = "Matt Webserver"
-    key_name = "main_key"
+module "matt_webserver" {
+    source = "./modules/webserver"
+    subnet_id = var.subnet_id    
+    vpc_id = var.vpc_id
+    my_ip = var.my_ip    
+    key_name = var.key_name
+    cidr_block = "172.31.20.0/20"
+    webserver_name = "Matt Web Server"
     ami = "ami-0fc5d935ebf8bc3bc"
-    my_ip = var.my_ip
 }
 
 resource "aws_security_group" "allow-ssh-web"{

@@ -2,16 +2,21 @@ terraform {
     required_version = ">= 1.6.2"
 }
 
-resource "aws_subnet" "webserver_net"{
-    vpc_id = var.vpc_id
-    cidr_block = var.cidr_block
-}
-
-resource "aws_instance" "ansible-managed"{
+resource "aws_instance" "webserver"{
     ami = var.ami
     instance_type = var.instance_type
-    subnet_id = aws_subnet.webserver_net
+    subnet_id = var.subnet_id
     key_name = var.key_name
+    vpc_security_group_ids = [ aws_security_group.allow-ssh-web.id ]
+
+    user_data = <<-EOF
+                 #!/bin/bash
+                 sudo apt update -y
+                 sudo apt install apache2 -y
+                 sudo systemctl start apache2
+                 sudo bash -c 'echo This is a web server > /var/www/html/index.html'
+                 EOF
+
 
     tags = {
         Name = var.webserver_name
@@ -19,8 +24,8 @@ resource "aws_instance" "ansible-managed"{
 }
 
 resource "aws_security_group" "allow-ssh-web"{  
-    name = "allow-ssh-web-traffic"
-    description = "Allow inbound traffic"
+    name = "allow-ssh-traffic-${var.webserver_name}"
+    description = "Allow inbound traffic for ${var.webserver_name}"
     vpc_id = var.vpc_id
 
     dynamic "ingress" {

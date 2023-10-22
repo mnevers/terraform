@@ -18,7 +18,6 @@ resource "aws_instance" "ansible-managed"{
     tags = {
         Name = "Prd"
     }
-
 }
 
 /*

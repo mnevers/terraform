@@ -1,3 +1,7 @@
+variable "subnet_id" {
+    type = string
+}
+
 variable "vpc_id" {
     type = string
 }
@@ -11,10 +15,6 @@ variable "ami"{
 }
 
 variable "key_name"{
-    type = string
-}
-
-variable "cidr_block"{
     type = string
 }
 

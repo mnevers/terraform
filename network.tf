@@ -8,15 +8,6 @@ data "aws_vpc" "default-vpc"{
     }
 }
 
-output "default-vpc"{
-    value = var.boolean == true ? data.aws_vpc.default-vpc.cidr_block : "Sensored Message"
-}
-
-variable "subnet_prd_a_prefix" {
-    description = "Lorem ipsum dolor sit amet"
-    type = string
-}
-
 resource "aws_vpc" "vpc-prd"{
     cidr_block = "10.0.0.0/16"
     
