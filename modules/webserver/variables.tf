@@ -37,15 +37,24 @@ locals {
         description = "HTTPS"
         from_port = 443
         to_port = 443
+        protocol = "tcp"
     },
     {
         description = "HTTP"
         from_port = 80
         to_port = 80
+        protocol = "tcp"
     },
     {        
         description = "SSH"
         from_port = 22
         to_port = 22
+        protocol = "tcp"
+    },
+    {        
+        description = "ICMP"
+        from_port = 8
+        to_port = 0
+        protocol = "icmp"
     }]
 }

@@ -7,7 +7,7 @@ resource "aws_instance" "webserver"{
     instance_type = var.instance_type
     subnet_id = var.subnet_id
     key_name = var.key_name
-    vpc_security_group_ids = [ aws_security_group.allow-ssh-web.id ]
+    vpc_security_group_ids = [ aws_security_group.allow-web.id ]
 
     user_data = <<-EOF
                  #!/bin/bash
@@ -23,8 +23,8 @@ resource "aws_instance" "webserver"{
     }
 }
 
-resource "aws_security_group" "allow-ssh-web"{  
-    name = "allow-ssh-traffic-${var.webserver_name}"
+resource "aws_security_group" "allow-web"{  
+    name = "allow-web-traffic-${var.webserver_name}"
     description = "Allow inbound traffic for ${var.webserver_name}"
     vpc_id = var.vpc_id
 
@@ -35,7 +35,7 @@ resource "aws_security_group" "allow-ssh-web"{
             description = ingress.value.description
             from_port = ingress.value.from_port
             to_port = ingress.value.to_port
-            protocol = "tcp"
+            protocol = ingress.value.protocol
             cidr_blocks = [var.my_ip]
         }
     }

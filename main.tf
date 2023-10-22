@@ -6,7 +6,7 @@ provider "aws"{
     alias = "west"
     region = "us-west-2"
 }
-
+/*
 module "matt_webserver" {
     source = "./modules/webserver"
     subnet_id = var.subnet_id    
@@ -16,7 +16,7 @@ module "matt_webserver" {
     cidr_block = "172.31.20.0/20"
     webserver_name = "Matt Web Server"
     ami = "ami-0fc5d935ebf8bc3bc"
-}
+}*/
 
 resource "aws_security_group" "allow-ssh-web"{
     for_each = {

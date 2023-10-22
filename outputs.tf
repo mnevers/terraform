@@ -6,6 +6,6 @@ output "ansible_ip-out" {
     value = aws_instance.ansible-managed.private_ip
 }
 
-output "webserver_module_ip" {
-  value = module.matt_webserver.webserver_public_ip
-}
+#output "webserver_module_ip" {
+#  value = module.matt_webserver.webserver_public_ip
+#}
