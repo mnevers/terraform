@@ -1,7 +1,3 @@
-locals {
-    prd_prefix = "prd"
-    dev_prefix = "dev"
-} 
 
 #import non terraform service or resource
 #in this case defaulty oob vpc
@@ -10,11 +6,6 @@ data "aws_vpc" "default-vpc"{
     tags = {
         Name = "default"
     }
-}
-
-variable "boolean"{
-    description = "testing bools"
-    type = bool
 }
 
 output "default-vpc"{

@@ -7,26 +7,14 @@ provider "aws"{
     region = "us-west-2"
 }
 
-locals {
-    ingress_rules = [{
-        description = "HTTPS"
-        from_port = 443
-        to_port = 443
-    },
-    {
-        description = "HTTP"
-        from_port = 80
-        to_port = 80
-    },
-    {        
-        description = "SSH"
-        from_port = 22
-        to_port = 22
-    }]
-}
-
-locals {
-    my_ip = ["73.69.109.181/32"]
+module "webserver" {
+    source = "../modules/webserver"
+    vpc_id = "vpc-1c1c1966"
+    cidr_block = "10.0.10.0/16"
+    webserver_name = "Matt Webserver"
+    key_name = "main_key"
+    ami = "ami-0fc5d935ebf8bc3bc"
+    my_ip = var.my_ip
 }
 
 resource "aws_security_group" "allow-ssh-web"{
@@ -47,7 +35,7 @@ resource "aws_security_group" "allow-ssh-web"{
             from_port = ingress.value.from_port
             to_port = ingress.value.to_port
             protocol = "tcp"
-            cidr_blocks = local.my_ip
+            cidr_blocks = [var.my_ip]
         }
     }
    
