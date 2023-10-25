@@ -11,7 +11,7 @@
 resource "aws_instance" "ansible_managed"{
     ami = "ami-0fc5d935ebf8bc3bc"
     instance_type = "t2.micro"
-    key_name = "main_key"
+    key_name = var.key_name
 
     network_interface {
         device_index = 0
@@ -38,7 +38,8 @@ resource "aws_instance" "server"{
     ami = "ami-0fc5d935ebf8bc3bc"
     instance_type = "t2.micro"
     subnet_id = each.value
-
+    vpc_security_group_ids = [aws_security_group.allow-ssh-web["vpc_prv"].id]
+    
     tags = {
         Name = each.key
     }
