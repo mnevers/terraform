@@ -8,15 +8,18 @@
     }
 }*/
 
-resource "aws_instance" "ansible-managed"{
+resource "aws_instance" "ansible_managed"{
     ami = "ami-0fc5d935ebf8bc3bc"
     instance_type = "t2.micro"
-    subnet_id = aws_subnet.subnet-prd-a.id
-    vpc_security_group_ids = [aws_security_group.allow-ssh-web["vpc_prv"].id]
     key_name = "main_key"
 
+    network_interface {
+        device_index = 0
+        network_interface_id = aws_network_interface.ansible_nic.id
+    }
+
     tags = {
-        Name = "Prd"
+        Name = "${terraform.workspace} server"
     }
 }
 

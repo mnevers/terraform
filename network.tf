@@ -1,4 +1,14 @@
+resource "aws_network_interface" "ansible_nic"{
+    subnet_id = aws_subnet.subnet-prd-a.id
+    private_ips = ["10.0.1.20"]
+    security_groups = [aws_security_group.allow-ssh-web["vpc_prv"].id]
+}
 
+resource "aws_eip" "ansible_ip"{
+    network_interface = aws_network_interface.ansible_nic.id
+    associate_with_private_ip = "10.0.1.20"
+    depends_on = [aws_internet_gateway.gw-prd]
+}
 #import non terraform service or resource
 #in this case defaulty oob vpc
 data "aws_vpc" "default-vpc"{
