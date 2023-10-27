@@ -35,7 +35,7 @@ resource "aws_security_group" "allow_ssh_web"{
             description = ingress.value.description
             from_port = ingress.value.from_port
             to_port = ingress.value.to_port
-            protocol = "tcp"
+            protocol = ingress.value.protocol
             cidr_blocks = [var.my_ip]
         }
     }
