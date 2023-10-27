@@ -1,5 +1,5 @@
 output "default_vpc_out"{
-    value = var.boolean == true ? data.aws_vpc.default-vpc.cidr_block : "Sensored Message"
+    value = var.boolean == true ? data.aws_vpc.default_vpc.cidr_block : "Sensored Message"
     description = "Print out default vpc or if a boolean of yes in a var was given sensor message (if block test)"
 }
 

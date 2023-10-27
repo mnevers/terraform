@@ -18,10 +18,10 @@ module "matt_webserver" {
     ami = "ami-0fc5d935ebf8bc3bc"
 }*/
 
-resource "aws_security_group" "allow-ssh-web"{
+resource "aws_security_group" "allow_ssh_web"{
     for_each = {
-        vpc_prv = aws_vpc.vpc-prd.id
-        vpc_pub = data.aws_vpc.default-vpc.id
+        vpc_prv = aws_vpc.vpc_prd.id
+        vpc_pub = data.aws_vpc.default_vpc.id
     }
 
     name = "allow-ssh-web-traffic"
